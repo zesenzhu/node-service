@@ -1,7 +1,7 @@
-import axios from "./axios";
-import * as moment from "moment";
+import axios from './axios';
+import * as moment from 'moment';
 
-const FORMATDAY = "YYYYMMDD";
+const FORMATDAY = 'YYYYMMDD';
 export default class Holiday {
   date = {};
   constructor() {}
@@ -29,12 +29,12 @@ export default class Holiday {
     //     }
     // }
     const res: any = await axios.get(
-      "https://www.mxnzp.com/api/holiday/single/" + day
+      'https://www.mxnzp.com/api/holiday/single/' + day
     );
 
     this.date[day] = res?.data?.data;
     Object.keys(res.data.data).forEach((d) => {
-      console.log("节假日数据:" + d + "====" + res.data.data[d]);
+      console.log('节假日数据:' + d + '====' + res.data.data[d]);
     });
   }
 }

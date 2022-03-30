@@ -1,7 +1,7 @@
 {
-    "trailingComma": "es5", // 尾随逗号
-    "tabWidth": 4, // 缩进
-    "semi": true, // 句尾分号
-    "singleQuote": true, // 单引号
-    "end-of-line": "lf" // 换行符
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "end-of-line": "lf"
 }
