@@ -1,7 +1,7 @@
 {
-  "name": "example",
+  "name": "mkjs-service",
   "version": "1.0.0",
-  "description": "mkjs servel",
+  "description": "mkjs service",
   "private": true,
   "egg": {
     "typescript": true,

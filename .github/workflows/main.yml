@@ -20,7 +20,8 @@ jobs:
       # 打包构建
       - name: Build
         uses: actions/setup-node@master
-      - run: npm install
+      # - run: npm install
+      - run: npm i -g npminstall && npminstall
       # 将app config文件打包压缩为release.tgz
       - run: npm run ci
 
