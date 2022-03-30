@@ -1,0 +1,66 @@
+# 自动部署的名称
+name:
+  Publish And Deploy next
+  # 监听push只有是提交tag才会部署
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # 打包及发布
+  build-and-deploy:
+    # 运行环境
+    runs-on: ubuntu-latest
+    steps: # 步骤
+      # 下载源码
+      - name: Checkout
+        uses: actions/checkout@master
+
+      # 打包构建
+      - name: Build
+        uses: actions/setup-node@master
+      - run: npm install
+      # 将app config文件打包压缩为release.tgz
+      - run: npm run ci
+
+      # 发布 Release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }} # 在github setting中的secrets中配置的TOKEN => github access token
+        with:
+          tag_name: ${{ github.ref }} # 标签名称
+          release_name: Release ${{ github.ref }} # release名称
+          draft: false # 是否是草稿
+          prerelease: false # 是否是预发布
+
+      # 上传构建结果到 Release（将打包的压缩包release.tgz上传到release）
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # 上传地址
+          asset_path: ./release.tgz
+          asset_name: release.tgz
+          asset_content_type: application/x-tgz
+
+      # 部署到服务器
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }} # 连接服务器参数
+          username: ${{ secrets.USERNAME }} # 连接服务器参数
+          password: ${{ secrets.PASSWORD }} # 连接服务器参数
+          port: ${{ secrets.PORT }} # 连接服务器参数
+          script: | # 连接服务器后执行的命令
+            cd /root/realworld-nuxtjs # 确保远程服务器必须有这个文件夹
+            wget https://github.com/liannian9/realworld-nuxt/releases/latest/download/release.tgz -O release.tgz
+            # 下载压缩包
+            tar zxvf release.tgz # 解压
+            npm install --production # 依赖
+            npm run stop # 停止上一次服务
+            npm run start # 启动服务

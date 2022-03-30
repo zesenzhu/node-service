@@ -4,7 +4,6 @@ import * as moment from 'moment';
 const FORMATDAY = 'YYYYMMDD';
 export default class Holiday {
   date = {};
-  constructor() {}
 
   async getData(day: any = moment().format(FORMATDAY)) {
     //https://www.mxnzp.com/doc/detail?id=1

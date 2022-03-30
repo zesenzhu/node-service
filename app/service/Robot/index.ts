@@ -1,32 +1,32 @@
-import axios from "axios";
-import * as moment from "moment";
-import { getDailyDocument } from "./acticle";
-import Holiday from "./holiday";
-import { isProduction } from "./utils";
+import axios from 'axios';
+import * as moment from 'moment';
+import { getDailyDocument } from './acticle';
+import Holiday from './holiday';
+import { isProduction } from './utils';
 
 // 部门机器人
 const baseUrl =
-  "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=732aa0d5-32a3-4e3a-9070-bb6d34025b35";
+  'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=732aa0d5-32a3-4e3a-9070-bb6d34025b35';
 //日报机器人
 const baseUrl2 = isProduction
-  ? "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=800ac227-1193-4719-bc8d-b680e3c8cdd3"
+  ? 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=800ac227-1193-4719-bc8d-b680e3c8cdd3'
   : baseUrl;
 // 周报机器人
 const baseUrl3 = isProduction
-  ? "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=9c2b6bd8-9a5c-47f0-8af5-4d94060dd5be"
+  ? 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=9c2b6bd8-9a5c-47f0-8af5-4d94060dd5be'
   : baseUrl;
 // 起始日期，都是小周
-const beginDate = "2021-10-20";
+const beginDate = '2021-10-20';
 // 周几
-const week = ["日", "一", "二", "三", "四", "五", "六"];
+const week = ['日', '一', '二', '三', '四', '五', '六'];
 const HolidayInstance = new Holiday();
 //日报
 async function bookDaily() {
   const result = await axios.post(baseUrl2, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
-      content: "亲，写日报和更新项目中心任务！12点截至哦！",
-      mentioned_list: ["@all"], // 提醒所有人
+      content: '亲，写日报和更新项目中心任务！12点截至哦！',
+      mentioned_list: ['@all'], // 提醒所有人
     },
   });
 
@@ -35,10 +35,10 @@ async function bookDaily() {
 //
 async function bookDailyEnd() {
   const result = await axios.post(baseUrl2, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
-      content: "亲，请及时处理更新今天的项目中心任务哦！",
-      mentioned_list: ["@all"], // 提醒所有人
+      content: '亲，请及时处理更新今天的项目中心任务哦！',
+      mentioned_list: ['@all'], // 提醒所有人
     },
   });
 
@@ -47,10 +47,10 @@ async function bookDailyEnd() {
 //
 async function bookDailyOver() {
   const result = await axios.post(baseUrl2, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
-      content: "亲，还有30分钟截止日报统计哦！",
-      mentioned_list: ["@all"], // 提醒所有人
+      content: '亲，还有30分钟截止日报统计哦！',
+      mentioned_list: ['@all'], // 提醒所有人
     },
   });
 
@@ -58,10 +58,10 @@ async function bookDailyOver() {
 }
 async function bookLunch() {
   const result = await axios.post(baseUrl, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
-      content: "大佬，订午餐啦！",
-      mentioned_list: ["@all"], // 提醒所有人
+      content: '大佬，订午餐啦！',
+      mentioned_list: ['@all'], // 提醒所有人
     },
   });
 
@@ -70,10 +70,10 @@ async function bookLunch() {
 
 async function bookTaxi() {
   const result = await axios.post(baseUrl, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
-      content: "[爱心]辛苦了，早点回家休息吧。9点打车可以报销哦。",
-      mentioned_list: ["@all"],
+      content: '[爱心]辛苦了，早点回家休息吧。9点打车可以报销哦。',
+      mentioned_list: ['@all'],
     },
   });
 
@@ -83,13 +83,13 @@ async function bookTaxi() {
 async function remindWeeklyReport(day) {
   const dayStr = week[day];
   const result = await axios.post(baseUrl3, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
       content:
-        "亲，周" +
+        '亲，周' +
         dayStr +
-        "了，记得写周报和增加项目中心饱和度，看看你这周有没偷懒！注意事项:周报需要有思考，收获，建议，复盘，风险点,请在5点前提交",
-      mentioned_list: ["@all"],
+        '了，记得写周报和增加项目中心饱和度，看看你这周有没偷懒！注意事项:周报需要有思考，收获，建议，复盘，风险点,请在5点前提交',
+      mentioned_list: ['@all'],
     },
   });
 
@@ -98,9 +98,9 @@ async function remindWeeklyReport(day) {
 
 async function remindGoHome() {
   const result = await axios.post(baseUrl, {
-    msgtype: "text",
+    msgtype: 'text',
     text: {
-      content: "11点半了，早点休息吧！",
+      content: '11点半了，早点休息吧！',
     },
   });
 
@@ -111,11 +111,11 @@ async function remindGoHome() {
 // day为小周
 function isBigWeek() {
   const beginDay = moment(beginDate);
-  const currentDay = moment(moment().format("YYYY-MM-DD"));
+  const currentDay = moment(moment().format('YYYY-MM-DD'));
   const bday = beginDay.day() > 0 ? beginDay.day() : 7;
   return (
     Math.ceil(
-      currentDay.diff(beginDay.subtract(bday - 1, "days")) /
+      currentDay.diff(beginDay.subtract(bday - 1, 'days')) /
         (1000 * 60 * 60 * 24) /
         7
     ) %
@@ -125,7 +125,7 @@ function isBigWeek() {
 }
 // 是否周五/周六
 function isFriday(day) {
-  let friday = 5;
+  const friday = 5;
   // 没大小周了
   // if (isBigWeek()) {
   //   friday = 6;
@@ -153,7 +153,7 @@ function isSharp(min) {
 }
 // 判断是否是节假日
 function isHoliday() {
-  const momentDate = moment().format("YYYYMMDD");
+  const momentDate = moment().format('YYYYMMDD');
   return (
     !isProduction ||
     HolidayInstance?.date[momentDate]?.indexWorkDayOfMonth === 0
@@ -173,7 +173,7 @@ export default async () => {
   console.log(
     `day: ${day} hour: ${hour} min: ${min} hourGap: ${hourGap}` + isProduction
   );
-  const momentDate = moment().format("YYYYMMDD");
+  const momentDate = moment().format('YYYYMMDD');
   if (!HolidayInstance.date[momentDate]) {
     await HolidayInstance.getData();
   }
@@ -214,5 +214,5 @@ export default async () => {
     return await getDailyDocument();
   }
   // await getDailyDocument();
-  return "hi tuya!";
+  return 'hi tuya!';
 };

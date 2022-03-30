@@ -15,6 +15,7 @@
   "spaced-comment": "off",
   "array-bracket-spacing": "off",
   "comma-dangle": "off",
-  "prettier/prettier": "error"
+  "prettier/prettier": "off",
+  "@typescript-eslint/no-var-requires": "off"
  }
 }
