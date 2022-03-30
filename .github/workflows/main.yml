@@ -58,8 +58,8 @@ jobs:
           password: ${{ secrets.PASSWORD }} # 连接服务器参数
           port: ${{ secrets.PORT }} # 连接服务器参数
           script: | # 连接服务器后执行的命令
-            cd /root/realworld-nuxtjs # 确保远程服务器必须有这个文件夹
-            wget https://github.com/liannian9/realworld-nuxt/releases/latest/download/release.tgz -O release.tgz
+            cd /home/mjks-service # 确保远程服务器必须有这个文件夹
+            wget ${{ steps.create_release.outputs.upload_url }} -O release.tgz
             # 下载压缩包
             tar zxvf release.tgz # 解压
             npm install --production # 依赖
