@@ -4,8 +4,9 @@ name:
   # 监听push只有是提交tag才会部署
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - master
+      - main
 
 jobs:
   # 打包及发布
