@@ -64,6 +64,6 @@ jobs:
             wget https://github.com/zesenzhu/mkjs-service/releases/latest/download/release.tgz -O release.tgz  #这个链接通过lastest来获取最新的,不需要指定版本
             # 下载压缩包
             tar zxvf release.tgz # 解压
-            npm install --production # 依赖
-            npm run stop # 停止上一次服务
-            npm run start # 启动服务
+            yarn # 依赖
+            yarn stop # 停止上一次服务
+            yarn start # 启动服务
