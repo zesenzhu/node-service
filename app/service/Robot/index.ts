@@ -201,7 +201,7 @@ export default async () => {
   }
 
   // 工作日每天晚上6点提醒打车可以报销
-  if (isWeekDay(day) && hour === 18 && isSharp(min)) {
+  if (isWeekDay(day) && hour === 18 && isHalfHour(min)) {
     return await bookTaxi();
   }
 
