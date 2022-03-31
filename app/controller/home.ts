@@ -9,7 +9,7 @@ export default class HomeController extends Controller {
     //   path.join(__dirname, "../view/canvas/index.html"),
     //   "utf-8"
     // );
-    ctx.body = '小宝';
+    ctx.body = '小宝测试';
     ctx.status = 200;
   }
 }
