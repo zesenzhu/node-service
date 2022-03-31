@@ -20,7 +20,7 @@
     "autod": "autod",
     "lint": "eslint . --ext .ts",
     "clean": "ets clean",
-    "build": "tar -zcvf release.tgz app config package.json",
+    "build": "tar -zcvf release.tgz app config package.json package-lock.json",
     "build-all": "tar -zcvf ../release.tgz ."
   },
   "dependencies": {
