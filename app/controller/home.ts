@@ -1,4 +1,4 @@
-import { Controller } from "egg";
+import { Controller } from 'egg';
 // 获取当前目录
 export default class HomeController extends Controller {
   public async index() {
@@ -9,8 +9,7 @@ export default class HomeController extends Controller {
     //   path.join(__dirname, "../view/canvas/index.html"),
     //   "utf-8"
     // );
-
-    ctx.body = "小宝";
+    ctx.body = '小宝测试-1';
     ctx.status = 200;
   }
 }

@@ -11,10 +11,17 @@ const baseUrl =
 const baseUrl2 = isProduction
   ? 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=800ac227-1193-4719-bc8d-b680e3c8cdd3'
   : baseUrl;
+
 // 周报机器人
 const baseUrl3 = isProduction
   ? 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=9c2b6bd8-9a5c-47f0-8af5-4d94060dd5be'
   : baseUrl;
+
+// 小A机器人
+const baseUrl4 = isProduction
+  ? 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=78df2a82-8a1d-4ec9-aca8-062d31882dc6'
+  : baseUrl;
+
 // 起始日期，都是小周
 const beginDate = '2021-10-20';
 // 周几
@@ -32,12 +39,24 @@ async function bookDaily() {
 
   return result.data;
 }
+// 小A日报
+async function bookDailyA() {
+  const result = await axios.post(baseUrl4, {
+    msgtype: 'text',
+    text: {
+      content: '亲[爱心]，请及时处理更新今天的项目中心任务哦！',
+      mentioned_list: ['@all'], // 提醒所有人
+    },
+  });
+
+  return result.data;
+}
 //
 async function bookDailyEnd() {
   const result = await axios.post(baseUrl2, {
     msgtype: 'text',
     text: {
-      content: '亲，请及时处理更新今天的项目中心任务哦！',
+      content: '亲[爱心]，请及时处理更新今天的项目中心任务哦！',
       mentioned_list: ['@all'], // 提醒所有人
     },
   });
@@ -190,8 +209,9 @@ export default async () => {
   if (isWeekDay(day) && hour === 11 && min >= 30 && min <= 31) {
     return await bookDailyOver();
   }
-  //工作日每天5.30点提醒项目中心任务
-  if (isWeekDay(day) && hour === 17 && isHalfHour(min)) {
+  //工作日每天6点提醒项目中心任务
+  if (isWeekDay(day) && hour === 18 && isSharp(min)) {
+    await bookDailyA();
     return await bookDailyEnd();
   }
 
@@ -213,6 +233,12 @@ export default async () => {
   if (hour === 8 && isHalfHour(min)) {
     return await getDailyDocument();
   }
+
+  // if (isWeekDay(day) && hour === 18 && min >= 12 && min <= 39) {
+  //   await bookDailyA();
+  //   await bookDailyEnd();
+  //   return await bookTaxi();
+  // }
   // await getDailyDocument();
   return 'hi tuya!';
 };
